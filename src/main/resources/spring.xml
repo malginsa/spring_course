@@ -18,4 +18,10 @@
 		<constructor-arg ref="eventLogger"/>
 	</bean>
 
+	<bean id="event" class ="com.epam.spring.core.Event" scope="prototype">
+		<constructor-arg>
+			<bean class="java.util.Date"/>
+		</constructor-arg>
+	</bean>
+
 </beans>

@@ -7,6 +7,7 @@ public class App {
 
 	private Client client;
 	private EventLogger eventLogger;
+	private static ApplicationContext ctx;
 
 	public App(Client client, EventLogger eventLogger) {
 		this.client = client;
@@ -15,7 +16,9 @@ public class App {
 	
 	private void logEvent(String msg) {
 		String message = msg.replaceAll(client.getId(), client.getFullName());
-		eventLogger.logEvent(message);
+		Event event = (Event) ctx.getBean("event");
+		event.setMsg(message);
+		eventLogger.logEvent(event);
 	}
 	
 	public static void main(String[] args) {
@@ -24,10 +27,11 @@ public class App {
 //		app.client = new Client("1", "John Smith");
 //		app.eventLogger = new ConsoleEventLogger();
 
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		ctx = new ClassPathXmlApplicationContext("spring.xml");
 		App app = (App) ctx.getBean("app");
 		
 		app.logEvent("Some event for user 1");
+		Utils.pause(2000);
 		app.logEvent("Some event for user 2");
 	}
 }
