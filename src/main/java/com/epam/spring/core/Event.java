@@ -1,17 +1,22 @@
 package com.epam.spring.core;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.Random;
 
 public class Event {
 
-	int id;
-	String msg;
-	Random random;
-	Date date;
+	static Random random = new Random();
 
-	{
-		random = new Random();
+	private int id;
+	private String msg;
+	private Date date;
+	private DateFormat df;
+
+	public Event(Date date, DateFormat df ) {
+		this.date = date;
+		this.df = df;
+		this.id = Math.abs(random.nextInt());
 	}
 
 	public String getMsg() {
@@ -22,16 +27,11 @@ public class Event {
 		this.msg = msg;
 	}
 
-	public Event(Date date) {
-		this.date = date;
-		this.id = random.nextInt();
-	}
-
 	@Override
 	public String toString() {
 		return "Event [id=" + id + 
 			", msg=" + msg + 
-			", date=" + date + "]";
+			", date=" + df.format(date) + "]";
 	}
 
 }

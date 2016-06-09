@@ -15,8 +15,8 @@ public class App {
 	}
 	
 	private void logEvent(String msg) {
-		String message = msg.replaceAll(client.getId(), client.getFullName());
 		Event event = (Event) ctx.getBean("event");
+		String message = msg.replaceAll(client.getId(), client.getFullName());
 		event.setMsg(message);
 		eventLogger.logEvent(event);
 	}
