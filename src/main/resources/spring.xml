@@ -11,6 +11,7 @@
 		<constructor-arg index="0" value ="1"/>
 <!-- 	<constructor-arg index="0" type ="java.lang.String" value = "1"/>  -->
 		<constructor-arg index="1" value ="J. Smith"/>
+		<property name="greeting" value="Hello there!"/>
 	</bean>
 
 	<bean id="app" class="com.epam.spring.core.App">
