@@ -5,28 +5,12 @@
  		http://www.springframework.org/schema/beans
  		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
+	<import resource="loggers.xml"/> 
+
 	<bean id="client" class="com.epam.spring.core.Client">
 		<constructor-arg index="0" value ="1"/>
 <!-- 	<constructor-arg index="0" type ="java.lang.String" value = "1"/>  -->
 		<constructor-arg index="1" value ="J. Smith"/>
-	</bean>
-
-	<bean id="eventLogger" class="com.epam.spring.core.ConsoleEventLogger"/>
-
-	<bean id="fileEventLogger" class="com.epam.spring.core.FileEventLogger"
-		init-method="init">
-		<constructor-arg value="events.log"/>
-	</bean>
-
-<!-- 	<bean id="cacheFileEventLogger" class="com.epam.spring.core.CacheFileEventLogger"
-		init-method="init" destroy-method="destroy">
-		<constructor-arg value="events.log"/>
-		<constructor-arg value="3"/>
-	</bean>
- -->
-	<bean id="cacheFileEventLogger" class="com.epam.spring.core.CacheFileEventLogger"
-		destroy-method="destroy" parent="fileEventLogger">
-		<constructor-arg index="1" value="3"/>
 	</bean>
 
 	<bean id="app" class="com.epam.spring.core.App">
@@ -46,6 +30,12 @@
 	<bean id="dateFormat" class="java.text.DateFormat" 
 		factory-method="getDateTimeInstance"/>
 
-	<bean id="sampleAbstractBean" abstract="true"/> <!-- исп-ся для наследования определений -->
-
 </beans>
+
+<!--
+abstract="true" исп-ся для наследования определений 
+depends-on="app" инициализация данного бина произойдёт после иниц-и бина app 
+lazy-init="true" иниц-я во время getBean()
+default-lazy-init="true" для всех бинов по-умолчанию !в данном конкретном xml-файле
+-->
+

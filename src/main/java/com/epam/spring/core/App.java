@@ -24,6 +24,7 @@ public class App {
 	public static void main(String[] args) {
 
 		ctx = new ClassPathXmlApplicationContext("spring.xml");
+//		ctx = new ClassPathXmlApplicationContext("spring.xml", parent_ctx);
 		App app = (App) ctx.getBean("app");
 
 		app.logEvent("Some event for user 1");
