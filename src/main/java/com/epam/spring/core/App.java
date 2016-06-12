@@ -1,24 +1,46 @@
 package com.epam.spring.core;
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
 
+	@Autowired	// by type Client 
 	private Client client;
-	private EventLogger eventLogger;
+
 	private static ConfigurableApplicationContext ctx;
 
-	public App(Client client, EventLogger eventLogger) {
-		this.client = client;
-		this.eventLogger = eventLogger;
+	private Map<EventType, EventLogger> loggers;
+	
+	@Autowired	// by bean's name
+	@Qualifier("defaultEventLogger")
+	private EventLogger defaultEventLogger;
+
+	public App(
+//			Client client, 
+//			EventLogger defaultEventLogger,
+			Map<EventType, EventLogger> loggers) {
+//		this.client = client;
+//		this.defaultEventLogger = defaultEventLogger;
+		this.loggers = loggers;
 	}
 
-	private void logEvent(String msg) {
+	private void logEvent(EventType type, String msg) {
+
 		Event event = (Event) ctx.getBean("event");
 		String message = msg.replaceAll(client.getId(), client.getFullName());
 		event.setMsg(message);
-		eventLogger.logEvent(event);
+
+		EventLogger logger = loggers.get(type);
+		if (null == logger) {
+			logger = defaultEventLogger;
+		}
+
+		logger.logEvent(event);
 	}
 
 	public static void main(String[] args) {
@@ -27,20 +49,10 @@ public class App {
 //		ctx = new ClassPathXmlApplicationContext("spring.xml", parent_ctx);
 		App app = (App) ctx.getBean("app");
 
-		app.logEvent("Some event for user 1");
-		Utils.pause(1000);
-		app.logEvent("Some event for user 2");
-		Utils.pause(1000);
-		app.logEvent("Some event for user 3");
-		Utils.pause(1000);
-		app.logEvent("Some event for user 4");
-		Utils.pause(1000);
-		app.logEvent("Some event for user 5");
-		Utils.pause(1000);
-		app.logEvent("Some event for user 6");
-		Utils.pause(1000);
-		app.logEvent("Some event for user 7");
-		
+		app.logEvent(EventType.ERROR, "ERROR-severity event for user 1");
+		app.logEvent(EventType.INFO, "INFO-severity event for user 2");
+		app.logEvent(null, "NULL-severity event for user 3");
+
 		ctx.close();
 	}
 }
