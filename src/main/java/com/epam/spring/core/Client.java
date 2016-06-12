@@ -1,11 +1,15 @@
 package com.epam.spring.core;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class Client {
 
 	private String id;
 	private String fullName;
 	private String greeting;
 
+	
+//	public Client(@Value("${client.id}") String id, String fullName) {
 	public Client(String id, String fullName) {
 		this.id = id;
 		this.fullName = fullName;

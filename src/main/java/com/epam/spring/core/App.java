@@ -9,13 +9,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
 
+	private static ConfigurableApplicationContext ctx;
+
 	@Autowired	// by type Client 
 	private Client client;
 
-	private static ConfigurableApplicationContext ctx;
-
 	private Map<EventType, EventLogger> loggers;
-	
+
 	@Autowired	// by bean's name
 	@Qualifier("defaultEventLogger")
 	private EventLogger defaultEventLogger;

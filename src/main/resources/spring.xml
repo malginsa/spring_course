@@ -14,8 +14,10 @@
  		http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
  	<context:annotation-config/>
+ 	
+<!--  	<context:component-scan base-package="..."/> -->
 
-	<import resource="loggers.xml"/> 
+	<import resource="loggers.xml"/>
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">

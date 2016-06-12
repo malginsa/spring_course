@@ -14,6 +14,7 @@ public class CacheFileEventLogger extends FileEventLogger{
 		this.cache = new ArrayList<>(cacheSize);
 	}
 
+//	@PreDestroy
 	private void destroy() {
 		this.writeEventsFromCache();
 	}
