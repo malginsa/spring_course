@@ -31,12 +31,13 @@
 				static-field="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 		</property>
 	</bean>
-
+	
 	<bean id="client" class="com.epam.spring.core.Client"
 		c:id="${id}"
-		c:fullName="${name}"
+ 		c:fullName="${name}"
 		p:greeting="${greeting}">
 	</bean>
+<!-- 		c:fullName="#{ systemEnvironment['USER'] }" -->
 
 <!-- 	<bean id="client" class="com.epam.spring.core.Client">
 		<constructor-arg index="0" type ="java.lang.String" value = "1"/>
